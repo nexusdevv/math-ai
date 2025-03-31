@@ -93,8 +93,8 @@ export default function Home() {
             </ul>
           </div>
           
-          <div className="grid grid-cols-12 gap-6 bg-white dark:bg-black rounded-lg p-6 max-w-1xl mx-auto">
-            <div className="col-span-8">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 bg-white dark:bg-black rounded-lg p-4 md:p-6 max-w-1xl mx-auto">
+            <div className="md:col-span-8">
               <h2 className="text-xl font-semibold mb-4">Enter Your Problem</h2>
               
               <form className="space-y-4" onSubmit={handleSubmit}>
@@ -121,7 +121,7 @@ export default function Home() {
                 <div className="pt-2">
                   <button 
                     type="submit" 
-                    className="btn-primary w-1/4"
+                    className="btn-primary w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? (
@@ -135,7 +135,7 @@ export default function Home() {
               </form>
             </div>
             
-            <div className="col-span-4 border-l border-zinc-200 dark:border-zinc-800 pl-6">
+            <div className="md:col-span-4 border-t mt-6 pt-6 md:mt-0 md:pt-0 md:border-t-0 md:border-l border-zinc-200 dark:border-zinc-800 md:pl-6">
               <h3 className="text-lg font-medium mb-2">Example Problems</h3>
               <ul className="space-y-2 text-sm">
                 <li>

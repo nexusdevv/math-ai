@@ -24,6 +24,7 @@ export default function AppLayout({ children, activeLink = 'home' }: AppLayoutPr
     };
 
     window.addEventListener('scroll', handleScroll);
+    handleScroll(); // İlk yüklemede durumu kontrol et
     
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -33,7 +34,7 @@ export default function AppLayout({ children, activeLink = 'home' }: AppLayoutPr
   return (
     <div className="flex flex-col min-h-screen">
       <header 
-        className={`fixed top-0 left-0 right-0 w-full z-50 transition-all duration-300 ${
+        className={`sticky top-0 w-full z-50 transition-all duration-300 ${
           isScrolled 
             ? 'bg-white/80 dark:bg-black/80 backdrop-blur-md shadow-sm border-b border-zinc-200/50 dark:border-zinc-900/50' 
             : 'bg-white dark:bg-black border-b border-zinc-200 dark:border-zinc-900'
@@ -81,7 +82,7 @@ export default function AppLayout({ children, activeLink = 'home' }: AppLayoutPr
         </div>
       </header>
 
-      <main className="flex-1 pt-16">
+      <main className="flex-1">
         {children}
       </main>
 
