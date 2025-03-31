@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
 import AppLayout from '../components/AppLayout';
 import BlurIn from '../components/animations/BlurIn';
@@ -60,7 +59,7 @@ export default function AboutPage() {
               </div>
               
               <p className="text-lg mb-6">
-                Hello! I'm a passionate full-stack developer with expertise in modern web technologies. 
+                Hello! I&apos;m a passionate full-stack developer with expertise in modern web technologies. 
                 I built MathAI to help students and professionals solve complex 
                 mathematical problems with detailed step-by-step solutions.
               </p>

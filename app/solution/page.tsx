@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import axios from 'axios';
@@ -51,7 +51,8 @@ const ApiNotification = ({ status, message }: { status: 'loading' | 'success' | 
   );
 };
 
-export default function SolutionPage() {
+// Wrapper component that uses useSearchParams
+function SolutionContent() {
   const searchParams = useSearchParams();
   const problem = searchParams.get('problem') || '';
   
@@ -76,6 +77,7 @@ export default function SolutionPage() {
       setError('Failed to solve the problem. Please check your input and try again.');
       console.error(err);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [problem]);
 
   const addToHistory = (problem: string) => {
@@ -85,7 +87,8 @@ export default function SolutionPage() {
       const savedHistory = localStorage.getItem('math-solver-history');
       const history = savedHistory ? JSON.parse(savedHistory) : [];
       
-      const isDuplicate = history.some((item: any) => item.problem === problem);
+      // Use a proper type instead of any
+      const isDuplicate = history.some((item: {problem: string}) => item.problem === problem);
       if (isDuplicate) return;
       
       const newItem = {
@@ -96,8 +99,9 @@ export default function SolutionPage() {
       
       const updatedHistory = [newItem, ...history].slice(0, 20);
       localStorage.setItem('math-solver-history', JSON.stringify(updatedHistory));
-    } catch (e) {
-      console.error('Failed to add to history:', e);
+    } catch (error) {
+      // Renamed e to error to avoid unused variable warning
+      console.error('Failed to add to history:', error);
     }
   };
 
@@ -173,7 +177,9 @@ export default function SolutionPage() {
         throwOnError: false,
         displayMode: false
       });
-    } catch (e) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (_error) {
+      // Caught error silently and return original text
       return text;
     }
   };
@@ -187,89 +193,105 @@ export default function SolutionPage() {
   };
 
   return (
-    <BlurIn>
-    <AppLayout>
-      <div className="container-custom py-12">
-        <section className="mb-8">
-          <h2 className="text-2xl font-bold mb-4">Problem</h2>
-          <div className="p-4 bg-zinc-100 dark:bg-black rounded-lg">
-            <div 
-              className="font-sans leading-relaxed tracking-normal text-lg"
-              dangerouslySetInnerHTML={{ __html: renderWithKatex(problem) }} 
-            />
-          </div>
-        </section>
+    <>
+      <section className="mb-8">
+        <h2 className="text-2xl font-bold mb-4">Problem</h2>
+        <div className="p-4 bg-zinc-100 dark:bg-black rounded-lg">
+          <div 
+            className="font-sans leading-relaxed tracking-normal text-lg"
+            dangerouslySetInnerHTML={{ __html: renderWithKatex(problem) }} 
+          />
+        </div>
+      </section>
 
-        <section>
-          <h2 className="text-2xl font-bold mb-4">Solution</h2>
-          
-          <ApiNotification status={apiStatus} message={apiMessage} />
-          
-          {isLoading ? (
+      <section>
+        <h2 className="text-2xl font-bold mb-4">Solution</h2>
+        
+        <ApiNotification status={apiStatus} message={apiMessage} />
+        
+        {isLoading ? (
+          <div className="flex flex-col items-center justify-center py-12">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-zinc-900 dark:border-zinc-100 mb-4"></div>
+            <p className="text-zinc-600 dark:text-zinc-400">Calculating with WolframAlpha...</p>
+          </div>
+        ) : error ? (
+          <div className="p-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-900/50 rounded-lg text-red-600 dark:text-red-400 text-center">
+            <p className="text-lg mb-2">Error</p>
+            <p>{error}</p>
+            <Link 
+              href="/" 
+              className="inline-block mt-4 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+            >
+              Try Another Problem
+            </Link>
+          </div>
+        ) : (
+          <div ref={solutionContentRef} className="space-y-2">
+            {solution.length === 0 ? (
+              <div className="p-6 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-900/50 rounded-lg text-yellow-800 dark:text-yellow-400 text-center">
+                <p>No solution found for this problem. Please try rephrasing or using a different format.</p>
+              </div>
+            ) : (
+              solution.map((step, index) => (
+                <div 
+                  key={index} 
+                  className={`p-4 ${
+                    isMainStep(step) 
+                      ? 'bg-zinc-100 dark:bg-zinc-800 border-l-4 border-blue-500 dark:border-blue-400' 
+                      : 'bg-white dark:bg-zinc-900'
+                  } border border-zinc-200 dark:border-zinc-800 rounded-lg mb-2`}
+                >
+                  <div 
+                    className={`font-sans leading-relaxed tracking-normal ${
+                      isMainStep(step) 
+                        ? 'font-semibold text-lg' 
+                        : 'font-normal text-base'
+                    }`}
+                    dangerouslySetInnerHTML={{ __html: renderWithKatex(step) }} 
+                  />
+                </div>
+              ))
+            )}
+          </div>
+        )}
+      </section>
+
+      <div className="mt-8 flex flex-wrap gap-4 justify-center">
+        <Link 
+          href="/" 
+          className="btn-primary inline-block"
+        >
+          Solve Another Problem
+        </Link>
+        
+        {!isLoading && !error && solution.length > 0 && (
+          <PDFDownloader 
+            contentRef={solutionContentRef as React.RefObject<HTMLElement>} 
+            problem={problem}
+            fileName={`math-solution-${new Date().getTime()}`}
+          />
+        )}
+      </div>
+    </>
+  );
+}
+
+// Main component that wraps the solution content with suspense
+export default function SolutionPage() {
+  return (
+    <BlurIn>
+      <AppLayout>
+        <div className="container-custom py-12">
+          <Suspense fallback={
             <div className="flex flex-col items-center justify-center py-12">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-zinc-900 dark:border-zinc-100 mb-4"></div>
-              <p className="text-zinc-600 dark:text-zinc-400">Calculating with WolframAlpha...</p>
+              <p className="text-zinc-600 dark:text-zinc-400">Loading problem data...</p>
             </div>
-          ) : error ? (
-            <div className="p-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-900/50 rounded-lg text-red-600 dark:text-red-400 text-center">
-              <p className="text-lg mb-2">Error</p>
-              <p>{error}</p>
-              <Link 
-                href="/" 
-                className="inline-block mt-4 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-              >
-                Try Another Problem
-              </Link>
-            </div>
-          ) : (
-            <div ref={solutionContentRef} className="space-y-2">
-              {solution.length === 0 ? (
-                <div className="p-6 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-900/50 rounded-lg text-yellow-800 dark:text-yellow-400 text-center">
-                  <p>No solution found for this problem. Please try rephrasing or using a different format.</p>
-                </div>
-              ) : (
-                solution.map((step, index) => (
-                  <div 
-                    key={index} 
-                    className={`p-4 ${
-                      isMainStep(step) 
-                        ? 'bg-zinc-100 dark:bg-zinc-800 border-l-4 border-blue-500 dark:border-blue-400' 
-                        : 'bg-white dark:bg-zinc-900'
-                    } border border-zinc-200 dark:border-zinc-800 rounded-lg mb-2`}
-                  >
-                    <div 
-                      className={`font-sans leading-relaxed tracking-normal ${
-                        isMainStep(step) 
-                          ? 'font-semibold text-lg' 
-                          : 'font-normal text-base'
-                      }`}
-                      dangerouslySetInnerHTML={{ __html: renderWithKatex(step) }} 
-                    />
-                  </div>
-                ))
-              )}
-            </div>
-          )}
-        </section>
-
-        <div className="mt-8 flex flex-wrap gap-4 justify-center">
-          <Link 
-            href="/" 
-            className="btn-primary inline-block"
-          >
-            Solve Another Problem
-          </Link>
-          
-          {!isLoading && !error && solution.length > 0 && (
-            <PDFDownloader 
-              contentRef={solutionContentRef as React.RefObject<HTMLElement>} 
-              problem={problem}
-              fileName={`math-solution-${new Date().getTime()}`}
-            />
-          )}
+          }>
+            <SolutionContent />
+          </Suspense>
         </div>
-      </div>
-    </AppLayout>
+      </AppLayout>
     </BlurIn>
   );
 } 

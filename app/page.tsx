@@ -4,60 +4,24 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import AppLayout from './components/AppLayout';
 import BlurIn from './components/animations/BlurIn';
-import Link from 'next/link';
-
-interface HistoryItem {
-  id: string;
-  problem: string;
-  timestamp: number;
-}
 
 export default function Home() {
   const [problem, setProblem] = useState('');
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [history, setHistory] = useState<HistoryItem[]>([]);
   
   // Load history from localStorage
   useEffect(() => {
     try {
       const savedHistory = localStorage.getItem('math-solver-history');
       if (savedHistory) {
-        setHistory(JSON.parse(savedHistory));
+        // Just loading to localStorage is sufficient
+        JSON.parse(savedHistory);
       }
     } catch (e) {
       console.error('Failed to load history:', e);
     }
   }, []);
-
-  const handleSolve = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (problem.trim()) {
-      router.push(`/solution?problem=${encodeURIComponent(problem)}`);
-    }
-  };
-
-  const exampleProblems = [
-    'x^2 + 4x - 5 = 0',
-    'integrate x^2 + 3x + 2',
-    'differentiate sin(x) * cos(x)',
-    'solve the system: 2x + y = 5, x - y = 1',
-    'find the determinant of [[1,2,3],[4,5,6],[7,8,9]]',
-    'find the x: 2x = 10'
-  ];
-
-  const commandList = [
-    { command: 'Solve Equation', example: 'x^2 + 4x - 5 = 0', description: 'Solves any equation' },
-    { command: 'Find the x', example: 'find the x: 2x = 10', description: 'Finds the unknown x variable' },
-    { command: 'Solve the System', example: 'solve the system: 2x + y = 5, x - y = 1', description: 'Solves systems of equations' },
-    { command: 'Integrate', example: 'integrate x^2 + 3x + 2', description: 'Calculates integrals' },
-    { command: 'Differentiate', example: 'differentiate sin(x) * cos(x)', description: 'Calculates derivatives' },
-    { command: 'Determinant', example: 'find the determinant of [[1,2,3],[4,5,6],[7,8,9]]', description: 'Calculates matrix determinants' }
-  ];
-
-  const tryExample = (example: string) => {
-    setProblem(example);
-  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -69,11 +33,6 @@ export default function Home() {
 
   const handleExampleClick = (example: string) => {
     setProblem(example);
-  };
-
-  const clearHistory = () => {
-    localStorage.removeItem('math-solver-history');
-    setHistory([]);
   };
 
   return (

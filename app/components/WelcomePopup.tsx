@@ -7,10 +7,7 @@ export default function WelcomePopup() {
   const [isOpen, setIsOpen] = useState(false);
   
   useEffect(() => {
-    // Popup'ın daha önce gösterilip gösterilmediğini kontrol et
-    const hasSeenPopup = localStorage.getItem('hasSeenWelcomePopup');
-    
-    // Popup'ı her zaman göster (localStorage kontrolünü kaldırdık)
+    // Popup'ı kısa bir gecikmeyle göster
     const timer = setTimeout(() => {
       setIsOpen(true);
     }, 1000);

@@ -1,6 +1,15 @@
 import { NextResponse } from 'next/server';
 import axios from 'axios';
 
+interface WolframSubpod {
+  plaintext: string;
+}
+
+interface WolframPod {
+  title: string;
+  subpods: WolframSubpod[];
+}
+
 export async function GET(request: Request) {
   // Get parameters from URL
   const url = new URL(request.url);
@@ -42,18 +51,18 @@ export async function GET(request: Request) {
     
     // Process data from API
     if (data.queryresult && data.queryresult.success) {
-      const pods = data.queryresult.pods;
+      const pods = data.queryresult.pods as WolframPod[];
       const steps: string[] = [];
       
       // Add title and problem definition
       steps.push(`Problem: ${query}`);
       
       // Add all results as steps
-      pods.forEach((pod: any) => {
+      pods.forEach((pod: WolframPod) => {
         if (pod.title && pod.subpods && pod.subpods.length > 0) {
           steps.push(`${pod.title}:`);
           
-          pod.subpods.forEach((subpod: any) => {
+          pod.subpods.forEach((subpod: WolframSubpod) => {
             if (subpod.plaintext) {
               // Clean and format steps
               const lines = subpod.plaintext.split('\n').filter((line: string) => line.trim() !== '');

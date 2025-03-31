@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import FadeIn from './animations/FadeIn';
 
 interface HistoryItem {
   problem: string;
@@ -31,24 +30,6 @@ export default function HistoryManager() {
 
     loadHistory();
   }, []);
-
-  const addToHistory = (problem: string) => {
-    if (!problem.trim()) return;
-    
-    try {
-      const newItem: HistoryItem = {
-        problem,
-        timestamp: Date.now(),
-        id: `history-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
-      };
-      
-      const updatedHistory = [newItem, ...history].slice(0, 20); // Maks 20 öğe sakla
-      setHistory(updatedHistory);
-      localStorage.setItem('math-solver-history', JSON.stringify(updatedHistory));
-    } catch (e) {
-      console.error('Failed to add to history:', e);
-    }
-  };
 
   const removeFromHistory = (id: string) => {
     try {
