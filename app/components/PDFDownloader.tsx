@@ -37,7 +37,7 @@ export default function PDFDownloader({ contentRef, problem, fileName = 'math-so
       
       // PDF title
       pdf.setFontSize(16);
-      pdf.text('MathGenius AI', 105, 15, { align: 'center' });
+      pdf.text('MathAI', 105, 15, { align: 'center' });
       
       // Problem title
       pdf.setFontSize(12);
