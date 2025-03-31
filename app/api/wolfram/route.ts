@@ -22,6 +22,7 @@ export async function GET(request: Request) {
     );
   }
   
+  // API anahtarını Vercel'deki gizli (secret) değişkenden al
   const WOLFRAM_APP_ID = process.env.NEXT_SECRET_WOLFRAM_APP_ID || '';
   
   // API key check
