@@ -1,7 +1,7 @@
 <h1 align="center"> MathAI - Smart Math Problem Solver</h1>
 
 <div align="center">
-  <img src="public/resources/mathai.png" alt="MathAI Logo" width="200" />
+  <img src="public/resources/mathai.png" alt="MathAI Logo" width="650" />
   <p><strong>Instantly solve complex mathematical problems with AI-powered step-by-step explanations.</strong></p>
 </div>
 
