@@ -1,7 +1,7 @@
-# MathAI - Smart Math Problem Solver
+<h1 align="center"> MathAI - Smart Math Problem Solver</h1>
 
 <div align="center">
-  <img src="" alt="MathAI Logo" width="200" />
+  <img src="public/resources/mathai.png" alt="MathAI Logo" width="200" />
   <p><strong>Instantly solve complex mathematical problems with AI-powered step-by-step explanations.</strong></p>
 </div>
 
@@ -41,8 +41,8 @@ This project was created as a single-developer effort to make advanced mathemati
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/mathai.git
-   cd mathai
+   git clone https://github.com/nexusdevv/math-ai.git
+   cd math-ai
    ```
 
 2. Install dependencies:
@@ -54,7 +54,7 @@ This project was created as a single-developer effort to make advanced mathemati
    - Create a `.env.local` file in the root directory
    - Add your WolframAlpha API key:
      ```
-     NEXT_PUBLIC_WOLFRAM_APP_ID=your-api-key-here
+     NEXT_SECRET_WOLFRAM_APP_ID=your-api-key-here
      ```
 
 4. Start the development server:
@@ -93,14 +93,14 @@ This project was created as a single-developer effort to make advanced mathemati
 ## 📱 Screenshots
 
 <div align="center">
-  <img src="screenshots/home-screen.png" alt="Home Screen" width="400" />
-  <img src="screenshots/solution-screen.png" alt="Solution Screen" width="400" />
-  <p><em>Home screen and Solution page examples</em></p>
+  <img src="/public/screenshots/home-screen.png" alt="Home Screen" width="400" />
+  <img src="/public/screenshots/about-screen.png" alt="About Screen" width="400" />
+  <p><em>Home screen and About page examples</em></p>
 </div>
 
 <div align="center">
-  <img src="screenshots/dark-mode.png" alt="Dark Mode" width="400" />
-  <img src="screenshots/mobile-view.png" alt="Mobile View" width="200" />
+  <img src="/public/screenshots/dark-mode.png" alt="Dark Mode" width="400" />
+  <img src="/public/screenshots/mobile-view.png" alt="Mobile View" width="200" />
   <p><em>Dark mode and mobile responsive design</em></p>
 </div>
 
@@ -124,7 +124,7 @@ Always double-check important solutions against other sources!
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the GPL-3.0 License - see the [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgements
 
@@ -137,6 +137,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 <div align="center">
-  <p>Created with ❤️ by a passionate developer</p>
-  <p>© 2023-2024 MathAI. All rights reserved.</p>
+  <p>Created with Next.js by Nexus</p>
+  <p>© 2025 MathAI. All rights reserved.</p>
 </div>

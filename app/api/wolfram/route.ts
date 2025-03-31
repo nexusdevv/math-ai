@@ -22,7 +22,7 @@ export async function GET(request: Request) {
     );
   }
   
-  const WOLFRAM_APP_ID = process.env.NEXT_PUBLIC_WOLFRAM_APP_ID || '';
+  const WOLFRAM_APP_ID = process.env.NEXT_SECRET_WOLFRAM_APP_ID || '';
   
   // API key check
   if (!WOLFRAM_APP_ID) {
