@@ -1,26 +1,85 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: white;
+  --scrollbar: #afafaf;
+  --foreground: #18181b;
+  --primary: #18181b;
+  --primary-foreground: white;
+  --secondary: #e4e4e7;
+  --secondary-foreground: #18181b;
+  --accent: #d4d4d8;
+  --accent-foreground: #18181b;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.dark {
+  --background: #000000;
+  --scrollbar: #ffffff;
+  --foreground: white;
+  --primary: white;
+  --primary-foreground: #18181b;
+  --secondary: #3f3f46;
+  --secondary-foreground: white;
+  --accent: #52525b;
+  --accent-foreground: white;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+
+@layer base {
+  body {
+    @apply bg-background text-foreground;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .math-input {
+    @apply w-full p-4 border border-zinc-300 dark:border-zinc-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-500 bg-white dark:bg-zinc-800 resize-none;
+  }
+  
+  .btn-primary {
+    @apply px-6 py-3 rounded-lg bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-100 transition-colors;
+  }
+  
+  .container-custom {
+    @apply max-w-4xl mx-auto px-4 sm:px-6;
+  }
+  
+  /* Improved KaTeX and solution styling */
+  .math-solution {
+    @apply text-base leading-relaxed tracking-normal;
+  }
+  
+  .math-solution .katex {
+    @apply text-lg mx-0.5;
+  }
+  
+  .math-solution .katex-display {
+    @apply my-3 overflow-x-auto pb-2;
+  }
+  
+  .math-solution .katex .mord, 
+  .math-solution .katex .mbin,
+  .math-solution .katex .mrel {
+    @apply dark:text-zinc-200;
+  }
 }
+
