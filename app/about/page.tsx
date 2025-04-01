@@ -6,8 +6,7 @@ import AppLayout from '../components/AppLayout';
 import BlurIn from '../components/animations/BlurIn';
 
 export default function AboutPage() {
-  const [avatarUrl] = useState('/nexus.png');
-  const instagramUsername = 'batuhan13485'; // Change if needed
+  const [avatarUrl] = useState('/nexus.svg');
   
   return (
     <BlurIn>
@@ -19,11 +18,12 @@ export default function AboutPage() {
             <div className="w-48 h-48 rounded-full overflow-hidden border-4 border-zinc-200 dark:border-zinc-800 flex-shrink-0">
               <Image 
                 src={avatarUrl} 
-                alt="Developer Avatar" 
+                alt="Nexus Logo" 
                 width={192} 
                 height={192} 
-                className="object-cover w-full h-full"
+                className="object-contain w-full h-full p-2 filter dark:invert"
                 draggable={false}
+                priority
               />
             </div>
             
@@ -46,7 +46,7 @@ export default function AboutPage() {
                   </svg>
                 </a>
                 <a 
-                  href={`https://instagram.com/${instagramUsername}`} 
+                  href={`https://instagram.com/batuhan13485`} 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="bg-zinc-100 dark:bg-zinc-800 p-3 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"

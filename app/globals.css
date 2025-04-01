@@ -12,6 +12,8 @@
   --secondary-foreground: #18181b;
   --accent: #d4d4d8;
   --accent-foreground: #18181b;
+  --gradient-start: #ecf6fc;
+  --gradient-end: #ffffff;
 }
 
 .dark {
@@ -24,6 +26,8 @@
   --secondary-foreground: white;
   --accent: #52525b;
   --accent-foreground: white;
+  --gradient-start: #0d121f;
+  --gradient-end: #000000;
 }
 
 ::-webkit-scrollbar {
@@ -47,6 +51,9 @@
 @layer base {
   body {
     @apply bg-background text-foreground;
+    background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+    background-attachment: fixed;
+    min-height: 100vh;
   }
 }
 
@@ -82,4 +89,3 @@
     @apply dark:text-zinc-200;
   }
 }
-
