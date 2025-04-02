@@ -1,8 +1,8 @@
 <h1 align="center"> MathAI - Smart Math Problem Solver</h1>
 
 <div align="center">
-  <img src="public/resources/mathai.png" alt="MathAI Logo" width="650" />
   <p><strong>Instantly solve complex mathematical problems with AI-powered step-by-step explanations.</strong></p>
+  <p>By the way i'm sorry that i'm using popads to gain money, there can be some popunder and popup ads.</p>
 </div>
 
 ## 🚀 About MathAI
