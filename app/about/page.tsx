@@ -46,7 +46,7 @@ export default function AboutPage() {
                   </svg>
                 </a>
                 <a 
-                  href={`https://instagram.com/batuhan13485`} 
+                  href={`https://instagram.com/bbatuu.u`} 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="bg-zinc-100 dark:bg-zinc-800 p-3 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"

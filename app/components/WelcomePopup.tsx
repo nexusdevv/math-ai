@@ -127,7 +127,7 @@ export default function WelcomePopup() {
                       GitHub
                     </a>
                     <a 
-                      href="https://instagram.com/batuhan13485" 
+                      href="https://instagram.com/bbatuu.u" 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="bg-zinc-100 border border-zinc-300 dark:border-zinc-900 dark:bg-zinc-800 p-3 rounded-full w-full text-center flex items-center justify-center hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"

@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./components/ThemeProvider";
 import WelcomePopup from "./components/WelcomePopup";
+import PopadsScript from "./components/PopadsScript";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -21,7 +22,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head />
+      <head>
+        <PopadsScript />
+      </head>
       <body className={`${inter.variable} antialiased bg-background text-foreground`}>
         <ThemeProvider>
           <WelcomePopup />

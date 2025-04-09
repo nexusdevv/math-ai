@@ -15,9 +15,13 @@
     "jspdf": "^3.0.1",
     "katex": "^0.16.21",
     "mathjs": "^14.4.0",
+    "mathlive": "^0.105.0",
     "next": "15.2.4",
+    "openai": "^4.91.1",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-webcam": "^7.2.0",
+    "tesseract.js": "^6.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
